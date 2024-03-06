@@ -79,10 +79,10 @@ namespace 文件批量重命名
                     {
                         string newName = item.DirectoryName + "\\" + $"{InitNum}" + $"{item.Extension}";
                         InitNum += Increment;
-                        //Console.WriteLine($"旧文件名:{item.FullName}");
-                        //Console.WriteLine($"新文件名:{newName}");
+
                         File.Move(item.FullName, newName);
                     }
+                    MessageBox.Show("完成", "温馨提示", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 }
             }
@@ -92,7 +92,37 @@ namespace 文件批量重命名
         // 字符串替换
         private void submitButton1_Click(object sender, RoutedEventArgs e)
         {
+            if(string.IsNullOrEmpty(this.DirectoryPath))
+            {
+                MessageBox.Show("文件夹路径不能为空", "温馨提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            } else
+            {
+                // 开始读取目录下的文件
 
+                // 检测 第一种规则是否存在
+
+                if(string.IsNullOrEmpty(this.targetStringTextBox.Text) == true)
+                {
+                    MessageBox.Show("参数不完整", "温馨提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+                } else
+                {
+                    this.TargetString = this.targetStringTextBox.Text;// 初始值
+                    this.DestinationString = this.destinationStringTextBox.Text;// 增量
+
+                    DirectoryInfo folder = new DirectoryInfo(this.DirectoryPath);
+                    foreach(FileInfo item in folder.GetFiles())
+                    {
+                        string newName = item.DirectoryName + "\\" + item.Name.Replace(this.TargetString, this.DestinationString);
+                        InitNum += Increment;
+                        //Console.WriteLine($"旧文件名:{item.FullName}");
+                        //Console.WriteLine($"新文件名:{newName}");
+                        File.Move(item.FullName, newName);
+                    }
+                    MessageBox.Show("完成", "温馨提示", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                }
+            }
         }
     }
 }
