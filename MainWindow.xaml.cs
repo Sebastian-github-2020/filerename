@@ -69,7 +69,7 @@ namespace 文件批量重命名
                             File.Move(item.FullName, newName);
                         }
                         MessageBox.Show("完成", "温馨提示", MessageBoxButton.OK, MessageBoxImage.Information);
-                    } catch(Exception ex)
+                    } catch(Exception)
                     {
 
                         MessageBox.Show("只能输入数字", "警告", MessageBoxButton.OK);
